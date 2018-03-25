@@ -15,11 +15,6 @@ Window_Base.prototype = Object.create(Window.prototype);
 Window_Base.prototype.constructor = Window_Base;
 
 Window_Base.prototype.initialize = function(x, y, width, height) {
-    console.log(x);
-    console.log(y);
-    console.log(width);
-    console.log(height);
-    console.log("--end--");
     Window.prototype.initialize.call(this);
     this.loadWindowskin();
     this.move(x, y, width, height);
@@ -433,10 +428,6 @@ Window_Base.prototype.calcTextHeight = function(textState, all) {
 };
 
 Window_Base.prototype.drawIcon = function(iconIndex, x, y) {
-    console.log(iconIndex);
-    console.log(x);
-    console.log(y);
-    console.log("--endicon--");
     var bitmap = ImageManager.loadSystem('IconSet');
     var pw = Window_Base._iconWidth;
     var ph = Window_Base._iconHeight;

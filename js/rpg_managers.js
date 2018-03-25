@@ -2085,7 +2085,15 @@ BattleManager.processTurn = function() {
         this._subject = this.getNextSubject();
     }
 };
-
+BattleManager.skipTurn = function() {
+    this._phase = 'turn';
+    this.clearActor();
+    $gameTroop.increaseTurn();
+    this._actionBattlers  =  $gameParty.members().concat($gameTroop.members());
+    this._actionBattlers.shift();
+    $gameParty.requestMotionRefresh();
+    this._logWindow.startTurn();
+};
 BattleManager.endTurn = function() {
     this._phase = 'turnEnd';
     this._preemptive = false;

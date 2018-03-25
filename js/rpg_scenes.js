@@ -2341,7 +2341,8 @@ Scene_Battle.prototype.onActorCancel = function() {
 Scene_Battle.prototype.selectEnemySelection = function() {
     var windowIndex = 0;
     var window = this.timerWindow;
-
+    this.hitPlace = 400;
+    var that = this;
     var interval = setInterval(
 
         function(){ 
@@ -2351,9 +2352,9 @@ Scene_Battle.prototype.selectEnemySelection = function() {
                 windowIndex = 0;
             }
             window.clear();
-            window.drawIcon(66,400,0);
+            window.drawIcon(66,that.hitPlace,0);
             window.drawIcon(76, windowIndex, 0);
-
+            that.windowIndex = windowIndex;
         }
 
         , 1);
@@ -2366,14 +2367,21 @@ Scene_Battle.prototype.selectEnemySelection = function() {
 };
 
 Scene_Battle.prototype.onEnemyOk = function() {
+    this.hitArea = 25;
     this.timerWindow.hide();
-    var action = BattleManager.inputtingAction();
-    action.setTarget(this._enemyWindow.enemyIndex());
-    this._enemyWindow.hide();
-    this._skillWindow.hide();
-    this._itemWindow.hide();
-    this.selectNextCommand();
-    console.log(action);
+    if (this.windowIndex >  this.hitPlace-this.hitArea && this.windowIndex < this.hitPlace+ (2 * (this.hitArea-5)))
+    {
+        var action = BattleManager.inputtingAction();
+        action.setTarget(this._enemyWindow.enemyIndex());
+        this._enemyWindow.hide();
+        this._skillWindow.hide();
+        this._itemWindow.hide();
+        this.selectNextCommand();
+    }
+    else
+    {
+        var action = BattleManager.skipTurn();
+    }
 };
 
 Scene_Battle.prototype.onEnemyCancel = function() {
